@@ -1,64 +1,8 @@
-
-// const express = require('express');
-// const mongoose = require('mongoose');
-// const cors = require('cors');
-
-// app.use(cors({
-//  origin:'*'
-// }))
-// const app = express();
-// const port = 3001;
-
-// // Connect to MongoDB
-// mongoose.connect('mongodb://localhost:27017/ott_database', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// })
-//   .then(() => {
-//     console.log('Connected to MongoDB');
-//   })
-//   .catch((error) => {
-//     console.error('Error connecting to MongoDB:', error);
-//   });
-
-// // Create a movie schema and model
-// const movieSchema = new mongoose.Schema({
-//   title: String,
-//   description: String,
-//   rating: Number,
-// });
-
-// const Movie = mongoose.model('Movie', movieSchema);
-
-// // Retrieve all movies
-// app.get('/api/movies', async (req, res) => {
-//   try {
-//     const movies = await Movie.find();
-//     res.json(movies);
-//   } catch (error) {
-//     res.status(500).json({ error: 'Internal server error' });
-//   }
-// });
-
-// // Create a new movie
-// app.post('/api/movies', async (req, res) => {
-//   try {
-//     const movie = new Movie(req.body);
-//     await movie.save();
-//     res.status(201).json(movie);
-//   } catch (error) {
-//     res.status(500).json({ error: 'Internal server error' });
-//   }
-// });
-
-// // Start the server
-// app.listen(port, () => {
-//   console.log(`Server is running on port ${port}`);
-// });
-
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const Razorpay = require('razorpay');
+
 
 const app = express();
 app.use(express.json());
@@ -85,6 +29,11 @@ const movieSchema = new mongoose.Schema({
 
 
 const Movie = mongoose.model('Movie', movieSchema);
+
+const razorpay = new Razorpay({
+  key_id: 'rzp_test_BZKmSXpXrgRayL',
+  key_secret: 'OAdFybwO1tLQ1bKfAPrldojG'
+});
 
 
 app.get('/api/movies', (req, res) => {
@@ -142,6 +91,50 @@ app.delete('/api/movies/:id', (req, res) => {
       res.status(500).json({ error: 'Failed to delete movie' });
     });
 });
+
+// app.post('/api/payment/orders', async (req, res) => {
+//   const { amount, currency, receipt } = req.body;
+
+//   try {
+//     const order = await razorpay.orders.create({
+//       amount,
+//       currency,
+//       receipt,
+//     });
+
+//     res.json({ order_id: order.id });
+//   } catch (error) {
+//     console.error('Error creating Razorpay order:', error);
+//     res.status(500).json({ error: 'Unable to create order' });
+//   }
+// });
+
+// app.post('/api/payment/verify', async (req, res) => {
+//   const { order_id, payment_id, signature } = req.body;
+
+//   try {
+//     const attributes = {
+//       order_id,
+//       payment_id,
+//     };
+
+//     const isPaymentValid = razorpay.utility.verifyPaymentSignature(
+//       attributes,
+//       signature
+//     );
+
+//     if (isPaymentValid) {
+      
+//       res.json({ message: 'Payment verified successfully' });
+//     } else {
+//       console.error('Invalid Razorpay payment signature');
+//       res.status(400).json({ error: 'Invalid payment' });
+//     }
+//   } catch (error) {
+//     console.error('Error verifying Razorpay payment:', error);
+//     res.status(500).json({ error: 'Unable to verify payment' });
+//   }
+// });
 
 
 app.listen(3001, () => {

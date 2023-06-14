@@ -10,6 +10,7 @@ import * as React from 'react'
 import { ChakraProvider } from '@chakra-ui/react'
 import Scrolltotop from "./components/Scrolltotop";
 import Dashboard from "./components/Dashboard";
+import Plans from "./components/Plans";
 
 
 
@@ -25,6 +26,7 @@ function App() {
       <Route path='/dashboard' element={<Dashboard />} />
         <Route path="/movies/:id" element={<Moviedetails />} />
         <Route path="/categories" element={<Categories />} />
+        <Route path="/plans" element={<Plans />} />
       </Routes>
     <Footer/>
     </Router>
