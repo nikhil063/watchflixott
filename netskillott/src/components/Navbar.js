@@ -33,22 +33,7 @@ function Navbar() {
                     Movies
                 </Button>
                 </Link>
-                <Link to="/tv"><Button className="main-button"
-                    color="white"
-                    background="none"
-                    marginRight="2vw"
-                    marginLeft="2vw"
-                    p='0'
-                    fontFamily="Poppins"
-                    fontWeight="400"
-                    fontSize="1.5vw"
-                    variant="unstyled"
-                    borderRadius="0"
-                    height="4vw"
-                >
-                    TV Series
-                </Button>
-                </Link>
+                
                 <Link to="/dashboard"><Button className="main-button"
                     color="white"
                     background="none"
@@ -79,6 +64,22 @@ function Navbar() {
                     height="4vw"
                 >
                     Categories
+                </Button>
+                </Link>
+                <Link to="/plans"><Button className="main-button"
+                    color="white"
+                    background="none"
+                    marginRight="2vw"
+                    marginLeft="2vw"
+                    p='0'
+                    fontFamily="Poppins"
+                    fontWeight="400"
+                    fontSize="1.5vw"
+                    variant="unstyled"
+                    borderRadius="0"
+                    height="4vw"
+                >
+                    Plans
                 </Button>
                 </Link>
 

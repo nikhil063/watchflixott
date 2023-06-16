@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const Razorpay = require('razorpay');
+const path = require('path');
 
 
 const app = express();
@@ -27,13 +27,8 @@ const movieSchema = new mongoose.Schema({
   rating: {type: Number, required: true, min:0, max:10},
 });
 
-
 const Movie = mongoose.model('Movie', movieSchema);
 
-const razorpay = new Razorpay({
-  key_id: 'rzp_test_BZKmSXpXrgRayL',
-  key_secret: 'OAdFybwO1tLQ1bKfAPrldojG'
-});
 
 
 app.get('/api/movies', (req, res) => {
@@ -92,50 +87,11 @@ app.delete('/api/movies/:id', (req, res) => {
     });
 });
 
-// app.post('/api/payment/orders', async (req, res) => {
-//   const { amount, currency, receipt } = req.body;
+app.use(express.static(path.join(__dirname, 'build')));
 
-//   try {
-//     const order = await razorpay.orders.create({
-//       amount,
-//       currency,
-//       receipt,
-//     });
-
-//     res.json({ order_id: order.id });
-//   } catch (error) {
-//     console.error('Error creating Razorpay order:', error);
-//     res.status(500).json({ error: 'Unable to create order' });
-//   }
-// });
-
-// app.post('/api/payment/verify', async (req, res) => {
-//   const { order_id, payment_id, signature } = req.body;
-
-//   try {
-//     const attributes = {
-//       order_id,
-//       payment_id,
-//     };
-
-//     const isPaymentValid = razorpay.utility.verifyPaymentSignature(
-//       attributes,
-//       signature
-//     );
-
-//     if (isPaymentValid) {
-      
-//       res.json({ message: 'Payment verified successfully' });
-//     } else {
-//       console.error('Invalid Razorpay payment signature');
-//       res.status(400).json({ error: 'Invalid payment' });
-//     }
-//   } catch (error) {
-//     console.error('Error verifying Razorpay payment:', error);
-//     res.status(500).json({ error: 'Unable to verify payment' });
-//   }
-// });
-
+app.get('/success', (req, res) => {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 
 app.listen(3001, () => {
   console.log('Server is running on port 3001');

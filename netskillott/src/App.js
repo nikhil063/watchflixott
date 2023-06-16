@@ -11,6 +11,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import Scrolltotop from "./components/Scrolltotop";
 import Dashboard from "./components/Dashboard";
 import Plans from "./components/Plans";
+import Paymentsuccess from "./components/Paymentsuccess";
 
 
 
@@ -27,6 +28,8 @@ function App() {
         <Route path="/movies/:id" element={<Moviedetails />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/plans" element={<Plans />} />
+        <Route path="/success" element={<Paymentsuccess />} />
+        {/* <Route path="/success" render={(props) => <Paymentsuccess paymentId={props.match.params.paymentId} />} /> */}
       </Routes>
     <Footer/>
     </Router>
